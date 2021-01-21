@@ -7,6 +7,12 @@ app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
 
+@app.route('/robots.txt')
+def robotstxt():
+    return """User-agent: *
+Disallow: /    
+"""
+
 @app.route('/')
 def create_map():
     """Main method where map is put together"""

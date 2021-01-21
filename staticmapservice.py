@@ -94,7 +94,7 @@ def create_map():
                 static_map.add_marker(marker)
             except PnvError:
                 return 'Exceeded maximum amount of points, nodes and vertices', 400
-            except:
+            except Exception as ex:
                 return 'Could not process marker', 400
     else:
         return 'Could not find markers and/or lines and/or polygons and/or icons', 400
@@ -110,6 +110,9 @@ def process_marker(m, pnv):
     m_properties = dict(item.split(':') for item in m.split('|'))
 
     m_color = m_properties['color']
+    if m_color[0] != "#":
+        m_color = "#" + m_color
+
     check_hex_code(m_color)
     m_diameter = int(m_properties['diam'])
 

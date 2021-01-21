@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 staticmap = "==0.5.4"
 Flask = "==1.0.2"
+gunicorn = "*"
 
 [requires]
 python_version = "3.8"

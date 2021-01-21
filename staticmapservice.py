@@ -80,11 +80,15 @@ def create_map():
         for i in request.args.getlist('icon'):
             try:
                 icon, updated_pnv = process_icon(i, pnv)
+                if icon.offset[0] == -1 and icon.offset[1] == -1:
+                    icon.offset = (int(icon.img.size[0] / 2), int(icon.img.size[1]))                    
+
                 pnv = updated_pnv
                 static_map.add_marker(icon)
             except PnvError:
                 return 'Exceeded maximum amount of points, nodes and vertices', 400
-            except:
+            except Exception as ex:
+                print(ex)
                 return 'Could not process icon', 400
 
         for m in request.args.getlist('marker'):
@@ -195,8 +199,8 @@ def process_icon(i, pnv):
     i_properties = dict(item.split(':') for item in i.split('|'))
 
     i_name = i_properties['name']
-    i_offset_x = int(i_properties['offx'])
-    i_offset_y = int(i_properties['offy'])
+    i_offset_x = int(i_properties.get('offx', "-1"))
+    i_offset_y = int(i_properties.get('offy', "-1"))
 
     i_lat = float(i_properties['coords'].split(',')[0])
     i_lon = float(i_properties['coords'].split(',')[1])

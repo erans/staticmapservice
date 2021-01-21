@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, Response
 from io import BytesIO
 from staticmap import CircleMarker, IconMarker, Line, Polygon, StaticMap
 import re
@@ -9,9 +9,10 @@ app.config.from_pyfile('config.py')
 
 @app.route('/robots.txt')
 def robotstxt():
-    return """User-agent: *
-Disallow: /    
+    data = """User-agent: *
+Disallow: /
 """
+    return Response(data, mimetype='text/plain')
 
 @app.route('/')
 def create_map():

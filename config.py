@@ -13,7 +13,7 @@ DEFAULT_HEIGHT = "200"
 DEFAULT_ZOOM = "10"
 
 # Maximum values can't be overwritten
-MAX_WIDTH = os.environ.get("MAX_WIDTH", "1200")
-MAX_HEIGHT = os.environ.get("MAX_HEIGHT", "1200")
+MAX_WIDTH = os.environ.get("MAX_WIDTH", "1280")
+MAX_HEIGHT = os.environ.get("MAX_HEIGHT", "1280")
 MAX_ZOOM = "19"
 MAX_PNV = "30"  # Map won't contain more points, nodes and vertices than this value

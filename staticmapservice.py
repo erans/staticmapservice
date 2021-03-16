@@ -237,11 +237,21 @@ def process_icon(i, pnv):
 def serve_image(image):
     """Saves map in a stream and serves it"""
 
+    use_webp = request.environ.get("HTTP_ACCEPT", "").find("image/webp") > -1
+
+    mimetype = "image/png"
+
     image_io = BytesIO()
-    image.save(image_io, format="PNG")
+    if use_webp:
+        mimetype = "image/webp"
+        webp_image = image.convert("RGB")
+        image.save(image_io, format="WebP", quality=95)
+    else:
+        image.save(image_io, format="PNG")
+
     image_io.seek(0)
 
-    return send_file(image_io, mimetype="image/png")
+    return send_file(image_io, mimetype=mimetype)
 
 
 def check_hex_code(color):
